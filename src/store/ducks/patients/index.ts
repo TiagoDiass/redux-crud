@@ -4,7 +4,7 @@ import { PatientsState, PatientsTypes } from './types';
 const INITIAL_STATE: PatientsState = {
   data: [],
   error: false,
-  loading: false,
+  loading: false
 };
 
 const reducer: Reducer<PatientsState> = (state = INITIAL_STATE, action) => {
@@ -17,11 +17,30 @@ const reducer: Reducer<PatientsState> = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: false,
-        data: action.payload.data,
+        data: action.payload.data
       };
 
     case PatientsTypes.LOAD_FAILURE:
       return { ...state, loading: false, error: true, data: [] };
+
+    case PatientsTypes.ADD_REQUEST:
+      return {
+        ...state,
+        loading: true,
+        error: false,
+        data: action.payload.data
+      };
+
+    case PatientsTypes.ADD_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: false,
+        data: action.payload.data
+      };
+
+    case PatientsTypes.ADD_FAILURE:
+      return { ...state, loading: false, error: true };
 
     default:
       return state;
