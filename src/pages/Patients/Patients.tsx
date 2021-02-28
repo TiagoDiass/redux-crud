@@ -19,6 +19,7 @@ type DispatchProps = {
   loadRequest: () => void;
   addRequest: (form: PatientForm) => void;
   deleteRequest: (patientId: number) => void;
+  editRequest: (patientId: number, patient: PatientForm) => void;
 };
 
 type OwnProps = {};
@@ -30,7 +31,8 @@ const Patients: React.FC<Props> = ({
   loading,
   loadRequest,
   addRequest,
-  deleteRequest
+  deleteRequest,
+  editRequest
 }) => {
   const [form, setForm] = useState<PatientForm>({
     name: '',
@@ -38,6 +40,7 @@ const Patients: React.FC<Props> = ({
   });
 
   const [isEdit, setIsEdit] = useState(false);
+  const [currentEditId, setCurrentEditId] = useState(0);
 
   useEffect(() => {
     loadRequest();
@@ -46,7 +49,17 @@ const Patients: React.FC<Props> = ({
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
 
-    addRequest(form);
+    if (isEdit) {
+      editRequest(currentEditId, form);
+      setForm({
+        name: '',
+        email: ''
+      });
+
+      setIsEdit(false);
+    } else {
+      addRequest(form);
+    }
   };
 
   const handleInputChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -62,6 +75,7 @@ const Patients: React.FC<Props> = ({
     });
 
     setIsEdit(true);
+    setCurrentEditId(patient.id);
   };
 
   const handleDeleteClick = (id: number) => {

@@ -21,3 +21,10 @@ export const deleteRequest = (patientId: number) =>
 export const deleteSuccess = () => action(PatientsTypes.DELETE_SUCCESS);
 
 export const deleteFailure = () => action(PatientsTypes.DELETE_FAILURE);
+
+export const editRequest = (patientId: number, patient: PatientForm) =>
+  action(PatientsTypes.EDIT_REQUEST, { patientId, patient });
+
+export const editSuccess = () => action(PatientsTypes.EDIT_SUCCESS);
+
+export const editFailure = () => action(PatientsTypes.EDIT_FAILURE);

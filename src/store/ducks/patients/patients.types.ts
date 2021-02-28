@@ -8,7 +8,10 @@ export enum PatientsTypes {
   ADD_FAILURE = '@patients/ADD_FAILURE',
   DELETE_REQUEST = '@patients/DELETE_REQUEST',
   DELETE_SUCCESS = '@patients/DELETE_SUCCESS',
-  DELETE_FAILURE = '@patients/DELETE_FAILURE'
+  DELETE_FAILURE = '@patients/DELETE_FAILURE',
+  EDIT_REQUEST = '@patients/EDIT_REQUEST',
+  EDIT_SUCCESS = '@patients/EDIT_SUCCESS',
+  EDIT_FAILURE = '@patients/EDIT_FAILURE'
 }
 
 // Data types

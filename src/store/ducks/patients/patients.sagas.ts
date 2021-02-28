@@ -5,6 +5,8 @@ import {
   addSuccess,
   deleteFailure,
   deleteSuccess,
+  editFailure,
+  editSuccess,
   loadFailure,
   loadRequest,
   loadSuccess
@@ -53,5 +55,24 @@ export function* remove(action: SagaAction<number>) {
     }
   } catch (err) {
     yield put(deleteFailure());
+  }
+}
+
+export function* edit(
+  action: SagaAction<{ patientId: number; patient: PatientForm }>
+) {
+  try {
+    const response = yield call(
+      api.put,
+      `/patients/${action.payload.patientId}`,
+      action.payload.patient
+    );
+
+    if (response.status == 200) {
+      yield put(editSuccess());
+      yield put(loadRequest());
+    }
+  } catch (err) {
+    yield put(editFailure());
   }
 }
