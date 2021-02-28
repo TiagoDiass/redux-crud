@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
-
 import { connect } from 'react-redux';
 import { ApplicationState } from '../../store';
-import { Patient, PatientForm } from '../../store/ducks/patients/types';
-import * as PatientsActions from '../../store/ducks/patients/actions';
+import {
+  Patient,
+  PatientForm
+} from '../../store/ducks/patients/patients.types';
+import * as PatientsActions from '../../store/ducks/patients/patients.actions';
 
 import { Container, Header, Main } from './styles';
 import { bindActionCreators, Dispatch } from 'redux';
@@ -39,14 +41,8 @@ const Patients: React.FC<Props> = ({
     loadRequest();
   }, []);
 
-  if (loading) {
-    return <h1>Carregando...</h1>;
-  }
-
   const handleFormSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-
-    console.log(form);
 
     addRequest(form);
   };
@@ -117,26 +113,31 @@ const Patients: React.FC<Props> = ({
           </div>
         </form>
 
-        <ul>
-          {patients.length ? (
-            patients.map(patient => (
-              <li key={patient.id}>
-                <span>ID: {patient.id}</span> <span>Nome: {patient.name}</span>{' '}
-                <span>Email: {patient.email}</span>
-                <div>
-                  <button onClick={() => handleEditClick(patient)}>
-                    Editar
-                  </button>
-                  <button onClick={() => handleDeleteClick(patient.id)}>
-                    Apagar
-                  </button>
-                </div>
-              </li>
-            ))
-          ) : (
-            <li>Sem usuários cadastrados</li>
-          )}
-        </ul>
+        {loading ? (
+          <h2 style={{ alignSelf: 'center', marginTop: 12 }}>Carregando...</h2>
+        ) : (
+          <ul>
+            {patients.length ? (
+              patients.map(patient => (
+                <li key={patient.id}>
+                  <span>ID: {patient.id}</span>{' '}
+                  <span>Nome: {patient.name}</span>{' '}
+                  <span>Email: {patient.email}</span>
+                  <div>
+                    <button onClick={() => handleEditClick(patient)}>
+                      Editar
+                    </button>
+                    <button onClick={() => handleDeleteClick(patient.id)}>
+                      Apagar
+                    </button>
+                  </div>
+                </li>
+              ))
+            ) : (
+              <li>Sem usuários cadastrados</li>
+            )}
+          </ul>
+        )}
       </Main>
     </Container>
   );
