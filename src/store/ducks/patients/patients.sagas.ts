@@ -3,6 +3,8 @@ import { call, put } from 'redux-saga/effects';
 import {
   addFailure,
   addSuccess,
+  deleteFailure,
+  deleteSuccess,
   loadFailure,
   loadRequest,
   loadSuccess
@@ -23,20 +25,33 @@ export function* load() {
   }
 }
 
-type SagaActionWithPayload<T = any> = {
+type SagaAction<T = any> = {
   type: string;
   payload: T;
 };
 
-export function* add(action: SagaActionWithPayload<PatientForm>) {
+export function* add(action: SagaAction<PatientForm>) {
   try {
     const response = yield call(api.post, '/patients/new', action.payload);
-    yield put(addSuccess());
 
     if (response.status == 200) {
+      yield put(addSuccess());
       yield put(loadRequest());
     }
   } catch (err) {
-    yield addFailure();
+    yield put(addFailure());
+  }
+}
+
+export function* remove(action: SagaAction<number>) {
+  try {
+    const response = yield call(api.delete, `/patients/${action.payload}`);
+
+    if (response.status == 200) {
+      yield put(deleteSuccess());
+      yield put(loadRequest());
+    }
+  } catch (err) {
+    yield put(deleteFailure());
   }
 }

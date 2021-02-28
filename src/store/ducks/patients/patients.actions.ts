@@ -14,3 +14,10 @@ export const addRequest = (patient: PatientForm) =>
 export const addSuccess = () => action(PatientsTypes.ADD_SUCCESS);
 
 export const addFailure = () => action(PatientsTypes.ADD_FAILURE);
+
+export const deleteRequest = (patientId: number) =>
+  action(PatientsTypes.DELETE_REQUEST, patientId);
+
+export const deleteSuccess = () => action(PatientsTypes.DELETE_SUCCESS);
+
+export const deleteFailure = () => action(PatientsTypes.DELETE_FAILURE);

@@ -18,6 +18,7 @@ type StateProps = {
 type DispatchProps = {
   loadRequest: () => void;
   addRequest: (form: PatientForm) => void;
+  deleteRequest: (patientId: number) => void;
 };
 
 type OwnProps = {};
@@ -28,7 +29,8 @@ const Patients: React.FC<Props> = ({
   patients,
   loading,
   loadRequest,
-  addRequest
+  addRequest,
+  deleteRequest
 }) => {
   const [form, setForm] = useState<PatientForm>({
     name: '',
@@ -66,9 +68,9 @@ const Patients: React.FC<Props> = ({
     const confirmation = confirm('Tem certeza que quer deletar este registro?');
 
     if (confirmation) {
-      alert('Deletei');
+      deleteRequest(id);
     } else {
-      alert('Não deletei');
+      alert('Registro não foi deletado');
     }
   };
 
